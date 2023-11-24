@@ -15,10 +15,10 @@
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <TextField layoutX="34.0" layoutY="123.0" />
-      <TextField layoutX="198.0" layoutY="123.0" />
-      <TextField layoutX="361.0" layoutY="123.0" />
-      <TextField layoutX="33.0" layoutY="182.0" />
+      <TextField layoutX="34.0" layoutY="123.0" promptText="E001" />
+      <TextField layoutX="198.0" layoutY="123.0" promptText="I001" />
+      <TextField layoutX="361.0" layoutY="123.0" promptText="Item Name" />
+      <TextField layoutX="33.0" layoutY="182.0" promptText="56" />
       <Label layoutX="34.0" layoutY="101.0" text="Expired ID" />
       <Label layoutX="198.0" layoutY="101.0" text="Item Code" />
       <Label layoutX="361.0" layoutY="101.0" text="Item Name" />
@@ -36,10 +36,23 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font></Button>
-      <Button layoutX="130.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Clear" textFill="RED" />
-      <TextField layoutX="198.0" layoutY="182.0" />
+      <Button layoutX="130.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font></Button>
+      <TextField layoutX="198.0" layoutY="182.0" promptText="S001" />
       <Label layoutX="198.0" layoutY="158.0" text="Supplier ID" />
-      <TextField layoutX="361.0" layoutY="182.0" />
+      <TextField layoutX="361.0" layoutY="182.0" promptText="071******" />
       <Label layoutX="361.0" layoutY="158.0" text="Supplier Contact" />
+      <Button layoutX="222.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="321.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

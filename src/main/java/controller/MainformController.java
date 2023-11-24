@@ -4,9 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
 
 public class MainformController {
 
@@ -18,9 +23,12 @@ public class MainformController {
     public Button btnShipment;
     public Button btnExpired;
     public Button btnDashBoard;
+    public Label lblDate;
+    public Label lblTime;
 
     public void initialize() throws IOException {
         InitializeDashBoard();
+        showDate();
     }
 
     public void InitializeDashBoard() throws IOException {
@@ -69,4 +77,12 @@ public class MainformController {
     public void btnDashBoardOnAction(ActionEvent actionEvent) throws IOException {
         InitializeDashBoard();
     }
+    public void showDate(){
+        Date d =new Date();
+        SimpleDateFormat s =new SimpleDateFormat("dd-MM-yyyy");
+        String dat= s.format(d);
+        lblDate.setText(dat);
+    }
+    
+
 }

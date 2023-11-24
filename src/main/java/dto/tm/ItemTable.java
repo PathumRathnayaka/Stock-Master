@@ -1,17 +1,19 @@
 package dto.tm;
 
+import java.time.LocalDate;
+
 public class ItemTable {
     private String id;
     private String name;
     private double price;
     private String category;
-    private String date;
+    private LocalDate date;
     private String description;
 
     public ItemTable() {
     }
 
-    public ItemTable(String id, String name, double price, String category, String date, String description) {
+    public ItemTable(String id, String name, double price, String category, LocalDate date, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -52,12 +54,12 @@ public class ItemTable {
         this.category = category;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.date = LocalDate.parse(date);
     }
 
     public String getDescription() {

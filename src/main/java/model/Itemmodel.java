@@ -20,7 +20,7 @@ public class Itemmodel {
         preparedStatement.setString(2,itemDto.getName());
         preparedStatement.setDouble(3,itemDto.getPrice());
         preparedStatement.setString(4,itemDto.getCategory());
-        preparedStatement.setString(5,itemDto.getDate());
+        preparedStatement.setString(5, String.valueOf(itemDto.getDate()));
         preparedStatement.setString(6,itemDto.getDescription());
 
         boolean isSaved = preparedStatement.executeUpdate() > 0;
@@ -44,11 +44,34 @@ public class Itemmodel {
                             resultSet.getDouble(3),
                             resultSet.getString(6),
                             resultSet.getString(4),
-                            resultSet.getString(5)
+                            resultSet.getDate(5).toLocalDate()
                     )
             );
         }
         return dtoList;
+    }
+    public ItemDto searchItem(String ItemID) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM item WHERE ItemID = ?";
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, ItemID);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        ItemDto dto = null;
+
+        if(resultSet.next()) {
+            dto = new ItemDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getDate(6).toLocalDate()
+            );
+        }
+        return dto;
     }
     void UpdateItems(){
         Connection connection= DbConnection.getInstance().getConnection();

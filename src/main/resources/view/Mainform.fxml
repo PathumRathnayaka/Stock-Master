@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +13,7 @@
    <children>
       <VBox layoutY="125.0" prefHeight="545.0" prefWidth="201.0">
          <children>
-            <Button fx:id="btnDashBoard" mnemonicParsing="false" onAction="#btnDashBoardOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: #182939;" text="Dash Board" textFill="WHITE">
+            <Button fx:id="btnDashBoard" mnemonicParsing="false" onAction="#btnDashBoardOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: #182939;" text="DashBoard" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
@@ -102,5 +103,15 @@
             <Image url="@../img/m2i8H7A0b1b1N4d3.jpg" />
          </image>
       </ImageView>
+      <Label fx:id="lblDate" layoutX="1043.0" layoutY="14.0" text="Date" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="900.0" layoutY="14.0" text="time" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

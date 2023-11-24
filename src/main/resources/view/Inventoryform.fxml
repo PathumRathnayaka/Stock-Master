@@ -15,29 +15,34 @@
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <TextField layoutX="34.0" layoutY="123.0" />
-      <TextField layoutX="198.0" layoutY="123.0" />
-      <TextField layoutX="361.0" layoutY="123.0" />
-      <TextField layoutX="33.0" layoutY="182.0" />
-      <TextField layoutX="198.0" layoutY="182.0" />
+      <TextField fx:id="txtGodownId" layoutX="34.0" layoutY="123.0" />
+      <TextField fx:id="txtTrackID" layoutX="362.0" layoutY="123.0" />
+      <TextField fx:id="txtInvoiceNumber" layoutX="34.0" layoutY="182.0" />
+      <TextField fx:id="txtQuantity" layoutX="198.0" layoutY="182.0" />
       <Label layoutX="37.0" layoutY="101.0" prefHeight="17.0" prefWidth="70.0" text="Godown ID" />
-      <Label layoutX="198.0" layoutY="101.0" text="Track ID" />
-      <Label layoutX="361.0" layoutY="101.0" text="Invoice Number" />
-      <Label layoutX="37.0" layoutY="158.0" text="Item Name" />
+      <Label layoutX="362.0" layoutY="101.0" text="Track ID" />
+      <Label layoutX="37.0" layoutY="158.0" text="Invoice Number" />
       <Label layoutX="198.0" layoutY="158.0" text="Quantity" />
-      <Button layoutX="33.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #1ba722;" text="Save" textFill="WHITE">
+      <Button fx:id="btnSave" layoutX="33.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #1ba722;" text="Save" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font></Button>
-      <Button layoutX="130.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Clear" textFill="RED" />
-      <TableView layoutX="35.0" layoutY="288.0" prefHeight="305.0" prefWidth="653.0">
+      <Button fx:id="btnUpdate" layoutX="130.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font></Button>
+      <TableView fx:id="tblInventory" layoutX="35.0" layoutY="288.0" prefHeight="305.0" prefWidth="748.0">
         <columns>
-          <TableColumn prefWidth="102.0" text="Godown ID" />
-          <TableColumn prefWidth="97.0" text="Track ID" />
-            <TableColumn prefWidth="125.0" text="Invoice Number" />
-            <TableColumn prefWidth="218.0" text="Item Name" />
-            <TableColumn prefWidth="110.0" text="Quantity" />
+          <TableColumn fx:id="clmnGodownID" prefWidth="102.0" text="Godown ID" />
+          <TableColumn fx:id="clmnItemID" prefWidth="97.0" text="Item ID" />
+            <TableColumn fx:id="clmnTrackID" prefWidth="218.0" text="Track ID" />
+            <TableColumn fx:id="clmnInvoiceNumber" prefWidth="218.0" text="Invoice Number" />
+            <TableColumn fx:id="clmnQuantity" prefWidth="110.0" text="Quantity" />
         </columns>
       </TableView>
+      <Button fx:id="btnSearch" layoutX="227.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnSearchOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Search" textFill="WHITE" />
+      <Button layoutX="327.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Clear" textFill="WHITE" />
+      <TextField fx:id="txtItemID" layoutX="198.0" layoutY="123.0" />
+      <Label layoutX="200.0" layoutY="101.0" prefHeight="17.0" prefWidth="70.0" text="Item ID" />
    </children>
 </AnchorPane>

@@ -8,10 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Itemmodel;
+import util.Regex;
+import util.TextFields;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ItemformController {
@@ -23,6 +27,8 @@ public class ItemformController {
 
     @FXML
     private Button btnUpdate;
+    @FXML
+    private Button btnSearch;
 
     @FXML
     private TextField txtDate;
@@ -75,7 +81,7 @@ public class ItemformController {
     }
 
     private void setCellValueFactory() {
-        clmnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        clmnID.setCellValueFactory(new PropertyValueFactory<>("id"));
         clmnName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         clmnPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
         clmnCategory.setCellValueFactory(new PropertyValueFactory<>("Category"));
@@ -85,12 +91,20 @@ public class ItemformController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+
+        boolean validate = validate();
+        if (!validate){
+            new Alert(Alert.AlertType.WARNING,"Fill ALl Fields With Valid Data").show();
+            return;
+        }
+
+
         String id=txtID.getText();
         String name=txtName.getText();
         double price= Double.parseDouble(txtPrice.getText());
         String description=txtDescription.getText();
         String category=txtCategory.getText();
-        String date =txtDate.getText();
+        LocalDate date = LocalDate.parse(txtDate.getText());
 
          itemDto =new ItemDto(id,name,price,description,category,date);
         try {
@@ -105,14 +119,31 @@ public class ItemformController {
             new Alert(Alert.AlertType.INFORMATION,e.getMessage()).show();
         }
     }
+    @FXML
+    void btnSearchOnAction(ActionEvent event) {
+        String code = txtID.getText();
+
+        try {
+            ItemDto dto = itemmodel.searchItem(code);
+            if (dto != null) {
+                setFields(dto);
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+    }
+
 
     private void loadAllItem() {
-        //var model = new Itemmodel();
+        var model = new Itemmodel();
 
         ObservableList<ItemTable> obList = FXCollections.observableArrayList();
 
         try {
-            List<ItemDto> dtoList = itemmodel.getAllItem();
+            List<ItemDto> dtoList = model.getAllItem();
 
             for (ItemDto dto : dtoList) {
                 obList.add(
@@ -157,7 +188,7 @@ public class ItemformController {
         txtName.setText(row.getName());
         txtPrice.setText(String.valueOf(row.getPrice()));
         txtCategory.setText(row.getCategory());
-        txtDate.setText(row.getDate());
+        txtDate.setText(String.valueOf(row.getDate()));
         txtDescription.setText(row.getDescription());
     }
     private void setFields(ItemDto dto) {
@@ -165,7 +196,38 @@ public class ItemformController {
         txtName.setText(dto.getName());
         txtPrice.setText(String.valueOf(dto.getPrice()));
         txtCategory.setText(dto.getCategory());
-        txtDate.setText(dto.getDate());
+        txtDate.setText(String.valueOf(dto.getDate()));
         txtDescription.setText(dto.getDescription());
     }
+
+    public void txtIdOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(TextFields.ID,txtID);
+    }
+
+    public void txtNameOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(TextFields.NAME,txtName);
+    }
+
+    public void txtPriceOnKeyRelesed(KeyEvent keyEvent) {
+        Regex.setTextColor(TextFields.DOUBLE,txtPrice);
+    }
+
+    public void txtCategoryOnKeyReleased(KeyEvent keyEvent) {
+    }
+
+    public void txtDescriptionOnKeyReleased(KeyEvent keyEvent) {
+    }
+
+    public void txtDateOnKeyReleased(KeyEvent keyEvent) {
+
+    }
+
+
+    public boolean validate(){
+        return Regex.setTextColor(TextFields.ID,txtID) &&
+                Regex.setTextColor(TextFields.NAME,txtName)&&
+                Regex.setTextColor(TextFields.DOUBLE,txtPrice);
+
+    }
+
 }
