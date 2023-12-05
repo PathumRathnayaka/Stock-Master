@@ -1,10 +1,9 @@
 package controller;
 
 
-import dto.ItemDto;
+import com.jfoenix.controls.JFXButton;
+import db.DbConnection;
 import dto.SupplierDto;
-
-
 import dto.tm.SupplierTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +12,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import model.SupplierModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import util.Regex;
+import util.TextFields;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,19 +30,15 @@ import static java.time.LocalDate.parse;
 
 public class SupplierformController {
 
-    private static SupplierDto supplierDto=new SupplierDto();
-    private static SupplierModel supplierModel=new SupplierModel();
-    @FXML
-    private Button btnClear;
 
     @FXML
-    private Button btnSave;
+    private JFXButton btnClear;
 
     @FXML
-    private Button btnSearch;
+    private JFXButton btnSave;
 
     @FXML
-    private Button btnUpdate;
+    private JFXButton btnUpdate;
 
     @FXML
     private TableColumn<?, ?> clmnDate;
@@ -44,10 +47,7 @@ public class SupplierformController {
     private TableColumn<?, ?> clmnID;
 
     @FXML
-    private TableColumn<?, ?> clmnInvoiceName;
-
-    @FXML
-    private TableColumn<?, ?> clmnItemName;
+    private TableColumn<?, ?> clmnInvoiceNumber;
 
     @FXML
     private TableColumn<?, ?> clmnSupplierContact;
@@ -65,9 +65,6 @@ public class SupplierformController {
     private TextField txtInvoiceName;
 
     @FXML
-    private TextField txtItemName;
-
-    @FXML
     private TextField txtSupplierContact;
 
     @FXML
@@ -76,52 +73,40 @@ public class SupplierformController {
     @FXML
     private TextField txtSupplierName;
 
-    @FXML
-    void btnClearOnAction(ActionEvent event) {
-
-    }
+    private SupplierModel supplierModel=new SupplierModel();
+    private SupplierDto supplierDto= new SupplierDto();
 
     public void initialize(){
         setCellValueFactory();
         loadAllSupplier();
         tableListener();
     }
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+
+    }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String SupplierID=txtSupplierID.getText();
-        String SupplierName=txtSupplierName.getText();
-        String InvoiceNum=txtInvoiceName.getText();
-        String ItemName=txtItemName.getText();
-        LocalDate Date= txtDate.getValue();
-        int SupplierContact= Integer.parseInt(txtSupplierContact.getText());
+        String supplierID=txtSupplierID.getText();
+        String supplierName=txtSupplierName.getText();
+        String invoiceName=txtInvoiceName.getText();
+        LocalDate date=txtDate.getValue();
+        int supplierContact= Integer.parseInt(txtSupplierContact.getText());
 
-        supplierDto=new SupplierDto(SupplierID,SupplierName,InvoiceNum,ItemName,Date,SupplierContact);
+        SupplierDto supplierDto=new SupplierDto(supplierID,supplierName,invoiceName,date,supplierContact);
+
         try {
-            boolean isSaved= supplierModel.SaveSupplier(supplierDto);
+            boolean isSaved=supplierModel.SaveSupplier(supplierDto);
             if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Suplier is saved").show();
+                new Alert(Alert.AlertType.INFORMATION,"Supplier is Saved !").show();
                 ClearField();
                 loadAllSupplier();
-
             }
         } catch (SQLException e) {
-            //throw new RuntimeException(e);
-            new Alert(Alert.AlertType.INFORMATION, e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
-
-
     }
-
-    private void setCellValueFactory() {
-        clmnID.setCellValueFactory(new PropertyValueFactory<>("SupplierID"));
-        clmnSupplierName.setCellValueFactory(new PropertyValueFactory<>("SupplierName"));
-        clmnInvoiceName.setCellValueFactory(new PropertyValueFactory<>("InvoiceNum"));
-        clmnItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-        clmnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        clmnSupplierContact.setCellValueFactory(new PropertyValueFactory<>("SupplierContact"));
-    }
-
     private void loadAllSupplier() {
         var model = new SupplierModel();
 
@@ -135,8 +120,7 @@ public class SupplierformController {
                         new SupplierTable(
                                 dto.getSupplierID(),
                                 dto.getSupplierName(),
-                                dto.getInvoiceNum(),
-                                dto.getItemName(),
+                                dto.getInvoiceName(),
                                 dto.getDate(),
                                 dto.getSupplierContact()
                         )
@@ -148,11 +132,18 @@ public class SupplierformController {
             throw new RuntimeException(e);
         }
     }
+    private void setCellValueFactory() {
+        clmnID.setCellValueFactory(new PropertyValueFactory<>("SupplierID"));
+        clmnSupplierName.setCellValueFactory(new PropertyValueFactory<>("SupplierName"));
+        clmnInvoiceNumber.setCellValueFactory(new PropertyValueFactory<>("InvoiceNum"));
+        clmnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        clmnSupplierContact.setCellValueFactory(new PropertyValueFactory<>("SupplierContact"));
+    }
     public void ClearField(){
         txtSupplierID.setText("");
         txtSupplierName.setText("");
         txtInvoiceName.setText("");
-        txtItemName.setText("");
+        txtDate.setAccessibleText("");
         txtSupplierContact.setText("");
     }
     private void tableListener() {
@@ -165,37 +156,48 @@ public class SupplierformController {
         txtSupplierID.setText(row.getSupplierID());
         txtSupplierName.setText(row.getSupplierName());
         txtInvoiceName.setText(row.getInvoiceNum());
-        txtItemName.setText(row.getItemName());
         txtSupplierContact.setText(String.valueOf(row.getSupplierContact()));
     }
     private void setFields(SupplierDto dto) {
         txtSupplierID.setText(dto.getSupplierID());
         txtSupplierName.setText(dto.getSupplierName());
-        txtInvoiceName.setText(String.valueOf(dto.getInvoiceNum()));
-        txtItemName.setText(dto.getItemName());
+        txtInvoiceName.setText(String.valueOf(dto.getInvoiceName()));
+        txtDate.setAccessibleText(String.valueOf(dto.getDate()));
         txtSupplierContact.setText(String.valueOf(dto.getSupplierContact()));
     }
 
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
-        String code = txtSupplierID.getText();
-
-        try {
-            SupplierDto dto = supplierModel.searchItem(code);
-            if (dto != null) {
-                setFields(dto);
-            } else {
-                new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-
+    public void btnReportOnAction(ActionEvent actionEvent) throws JRException, SQLException {
+        InputStream resourceAsStream = getClass().getResourceAsStream("/report/Supplier.jrxml");
+        JasperDesign load = JRXmlLoader.load(resourceAsStream);
+        JasperReport jasperReport = JasperCompileManager.compileReport(load);
+        JasperPrint jasprePrint = JasperFillManager.fillReport(jasperReport,
+                null,
+                DbConnection.getInstance().getConnection()
+        );
+        JasperViewer.viewReport(jasprePrint,false);
     }
-
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
 
     }
 
+    @FXML
+    void txtInvoiceNumberOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtSupplierContactOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextFields.PHONE,txtSupplierContact);
+    }
+
+    @FXML
+    void txtSupplierIdOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextFields.ID,txtSupplierID);
+    }
+
+    @FXML
+    void txtSupplierNameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextFields.NAME,txtSupplierName);
+    }
 }

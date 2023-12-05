@@ -10,10 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class SupplierDto {
-    private String SupplierID;
-    private String SupplierName;
-    private String InvoiceNum;
-    private String ItemName;
-    private LocalDate Date;
-    private int SupplierContact;
+    private String supplierID;
+    private String supplierName;
+    private String invoiceName;
+    private LocalDate date;
+    private int supplierContact;
+
+
 }

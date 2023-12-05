@@ -14,20 +14,23 @@ public class Itemmodel {
 
     public boolean SaveItems(ItemDto itemDto) throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
-        String sql = "INSERT INTO ITEM VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO item VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,itemDto.getId());
-        preparedStatement.setString(2,itemDto.getName());
-        preparedStatement.setDouble(3,itemDto.getPrice());
-        preparedStatement.setString(4,itemDto.getCategory());
-        preparedStatement.setString(5, String.valueOf(itemDto.getDate()));
-        preparedStatement.setString(6,itemDto.getDescription());
+        preparedStatement.setString(1,itemDto.getItemID());
+        preparedStatement.setString(2,itemDto.getSupplierID());
+        preparedStatement.setString(3,itemDto.getName());
+        preparedStatement.setDouble(4,itemDto.getPrice());
+        preparedStatement.setString(5,itemDto.getCategory());
+        preparedStatement.setString(6, String.valueOf(itemDto.getDate()));
+        preparedStatement.setString(7,itemDto.getDescription());
+        preparedStatement.setInt(8,itemDto.getQty());
+
 
         boolean isSaved = preparedStatement.executeUpdate() > 0;
         return isSaved;
     }
 
-    public List<ItemDto> getAllItem() throws SQLException {
+    public static List<ItemDto> getAllItem() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM item";
@@ -41,10 +44,14 @@ public class Itemmodel {
                     new ItemDto(
                             resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getDouble(3),
-                            resultSet.getString(6),
-                            resultSet.getString(4),
-                            resultSet.getDate(5).toLocalDate()
+                            resultSet.getString(3),
+                            resultSet.getDouble(4),
+                            resultSet.getString(5),
+                            resultSet.getDate(6).toLocalDate(),
+                            resultSet.getString(7),
+                            resultSet.getInt(8)
+
+
                     )
             );
         }
@@ -65,16 +72,30 @@ public class Itemmodel {
             dto = new ItemDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
-                    resultSet.getDouble(3),
-                    resultSet.getString(4),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4),
                     resultSet.getString(5),
-                    resultSet.getDate(6).toLocalDate()
+                    resultSet.getDate(6).toLocalDate(),
+                    resultSet.getString(7),
+                    resultSet.getInt(8)
             );
         }
         return dto;
     }
+    public static boolean updateQty(String itemID, int qty) throws SQLException, ClassNotFoundException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE item SET qty = qty - ? WHERE itemID = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setInt(1, qty);
+        pstm.setString(2, itemID);
+
+        return pstm.executeUpdate() > 0;
+    }
     void UpdateItems(){
         Connection connection= DbConnection.getInstance().getConnection();
     }
+
 
 }

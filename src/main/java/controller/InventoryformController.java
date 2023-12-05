@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import dto.InventoryDto;
 import dto.tm.InventoryTable;
 import javafx.collections.FXCollections;
@@ -11,38 +12,46 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.InventoryModel;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class InventoryformController {
     @FXML
-    private Button btnSave;
+    private JFXButton btnClear;
 
     @FXML
-    private Button btnSearch;
+    private JFXButton btnSave;
 
     @FXML
-    private Button btnUpdate;
+    private JFXButton btnUpdate;
 
     @FXML
     private TableColumn<?, ?> clmnGodownID;
 
     @FXML
-    private TableColumn<?, ?> clmnInvoiceNumber;
+    private TableColumn<?, ?> clmnInventoryID;
 
     @FXML
-    private TableColumn<?, ?> clmnItemID;
+    private TableColumn<?, ?> clmnInvoiceNumber;
 
     @FXML
     private TableColumn<?, ?> clmnQuantity;
 
     @FXML
-    private TableColumn<?, ?> clmnTrackID;
+    private TableColumn<?, ?> clmnTrackId;
+    @FXML
+    private TableColumn<?, ?> clmnDate;
 
     @FXML
     private TableView<InventoryTable> tblInventory;
+    @FXML
+    private DatePicker txtDate;
 
     @FXML
     private TextField txtGodownId;
+
+    @FXML
+    private TextField txtInventoryID;
 
     @FXML
     private TextField txtInvoiceNumber;
@@ -55,8 +64,7 @@ public class InventoryformController {
 
     @FXML
     private TextField txtTrackID;
-
-    private static InventoryDto inventoryDto=new InventoryDto();
+    private static InventoryDto inventoryDto =new InventoryDto();
     private static InventoryModel inventoryModel=new InventoryModel();
 
     public void initialize() {
@@ -64,30 +72,32 @@ public class InventoryformController {
         loadAllInventory();
     }
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
-        String GodownID=txtGodownId.getText();
-        String ItemID=txtItemID.getText();
-        String TrackID=txtTrackID.getText();
-        String InvoiceID=txtInvoiceNumber.getText();
-        int Quantity= Integer.parseInt(txtQuantity.getText());
+    void btnClearOnAction(ActionEvent event) {
 
-        inventoryDto=new InventoryDto(GodownID,ItemID,TrackID,InvoiceID,Quantity);
+    }
+
+    @FXML
+    void btnSaveOnAction(ActionEvent event) {
+        String inventoryId=txtInventoryID.getText();
+        String itemID=txtItemID.getText();
+        String godownID=txtGodownId.getText();
+        String trackID=txtTrackID.getText();
+        String invoiceNumber=txtInvoiceNumber.getText();
+        int quantity= Integer.parseInt(txtQuantity.getText());
+        LocalDate date=txtDate.getValue();
+        inventoryDto=new InventoryDto(inventoryId,itemID,godownID,trackID,invoiceNumber,quantity,date);
+
         try {
             boolean isSaved=inventoryModel.saveInventory(inventoryDto);
             if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Inventory saved").show();
-                setCellValueFactory();
-                loadAllInventory();
+                new Alert(Alert.AlertType.INFORMATION,"Inventory is Saved!").show();
             }
         } catch (SQLException e) {
-            //throw new RuntimeException(e);
-            new Alert(Alert.AlertType.INFORMATION,e.getMessage()).show();
-
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();;
         }
 
 
     }
-
     private void loadAllInventory() {
         var model = new InventoryModel();
 
@@ -99,11 +109,13 @@ public class InventoryformController {
             for (InventoryDto dto : dtoList) {
                 obList.add(
                         new InventoryTable(
-                                dto.getGodownID(),
+                                dto.getInventoryId(),
                                 dto.getItemID(),
+                                dto.getGodownID(),
                                 dto.getTrackID(),
-                                dto.getInvoiceNum(),
-                                dto.getQuantity()
+                                dto.getInvoiceNumber(),
+                                dto.getQuantity(),
+                                dto.getDate()
                         )
                 );
             }
@@ -114,16 +126,12 @@ public class InventoryformController {
         }
     }
     private void setCellValueFactory() {
-        clmnGodownID.setCellValueFactory(new PropertyValueFactory<>("GodownID"));
-        clmnItemID.setCellValueFactory(new PropertyValueFactory<>("ItemID"));
-        clmnTrackID.setCellValueFactory(new PropertyValueFactory<>("TrackID"));
-        clmnInvoiceNumber.setCellValueFactory(new PropertyValueFactory<>("InvoiceNum"));
-        clmnQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-    }
-
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
-
+        clmnInventoryID.setCellValueFactory(new PropertyValueFactory<>("inventoryId"));
+        clmnGodownID.setCellValueFactory(new PropertyValueFactory<>("godownID"));
+        clmnTrackId.setCellValueFactory(new PropertyValueFactory<>("trackID"));
+        clmnInvoiceNumber.setCellValueFactory(new PropertyValueFactory<>("invoiceNumber"));
+        clmnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        clmnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     }
 
     @FXML

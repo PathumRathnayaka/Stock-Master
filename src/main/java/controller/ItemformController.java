@@ -1,5 +1,9 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import dto.ItemDto;
 import dto.tm.ItemTable;
 import javafx.collections.FXCollections;
@@ -9,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import model.Itemmodel;
-import util.Regex;
-import util.TextFields;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,21 +21,52 @@ import java.util.List;
 
 public class ItemformController {
 
-    public AnchorPane root;
+    @FXML
+    private JFXButton btnClear;
 
     @FXML
-    private Button btnSave;
+    private JFXButton btnSave;
 
     @FXML
-    private Button btnUpdate;
+    private JFXButton btnUpdate;
     @FXML
-    private Button btnSearch;
+    private JFXButton btnSearch;
 
     @FXML
-    private TextField txtDate;
+    private JFXCheckBox checkbxFreezers;
+
+    @FXML
+    private TableColumn<?, ?> clmnCategory;
+    @FXML
+    private TableColumn<?, ?> clmnQty;
+    @FXML
+    private TableColumn<?, ?> clmnDescription;
+
+    @FXML
+    private TableColumn<?, ?> clmnExpiryDate;
+
+    @FXML
+    private TableColumn<?, ?> clmnID;
+
+    @FXML
+    private TableColumn<?, ?> clmnName;
+
+    @FXML
+    private TableColumn<?, ?> clmnPrice;
+
+
+
+    @FXML
+    private JFXComboBox<?> combDegrees;
+
+    @FXML
+    private TableView<ItemTable> tblItems;
 
     @FXML
     private TextField txtCategory;
+
+    @FXML
+    private DatePicker txtDate;
 
     @FXML
     private TextField txtDescription;
@@ -46,96 +78,61 @@ public class ItemformController {
     private TextField txtName;
 
     @FXML
+    private TextField txtSupplierID;
+
+    @FXML
     private TextField txtPrice;
 
+    @FXML
+    private TextField txtQty;
 
     @FXML
-    private TableColumn<?, ?> clmnCategory;
-
+    private JFXTextField txtSearch;
     @FXML
-    private TableColumn<?, ?> clmnDate;
-
-    @FXML
-    private TableColumn<?, ?> clmnDescription;
-
-    @FXML
-    private TableColumn<?, ?> clmnID;
-
-    @FXML
-    private TableColumn<?, ?> clmnName;
-
-    @FXML
-    private TableColumn<?, ?> clmnPrice;
-
-    @FXML
-    private TableView<ItemTable> tblItems;
-
+    private TextField txtInventoryID;
     private static ItemDto itemDto=new ItemDto();
     private static Itemmodel itemmodel=new Itemmodel();
-    //private static ItemTable itemTable=new ItemTable();
+    private ObservableList<ItemTable> obList = null;
+
 
     public void initialize() {
         setCellValueFactory();
         loadAllItem();
         tableListener();
     }
+        @FXML
+    void btnClearOnAction(ActionEvent event) {
 
-    private void setCellValueFactory() {
-        clmnID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        clmnName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        clmnPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
-        clmnCategory.setCellValueFactory(new PropertyValueFactory<>("Category"));
-        clmnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        clmnDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
 
-        boolean validate = validate();
-        if (!validate){
-            new Alert(Alert.AlertType.WARNING,"Fill ALl Fields With Valid Data").show();
-            return;
-        }
-
-
-        String id=txtID.getText();
+        String supplierID= txtSupplierID.getText();
+        String itemID=txtID.getText();
         String name=txtName.getText();
         double price= Double.parseDouble(txtPrice.getText());
-        String description=txtDescription.getText();
         String category=txtCategory.getText();
-        LocalDate date = LocalDate.parse(txtDate.getText());
+        LocalDate date = txtDate.getValue();
+        String description=txtDescription.getText();
+        int qty= Integer.parseInt(txtQty.getText());
 
-         itemDto =new ItemDto(id,name,price,description,category,date);
+
+
+        itemDto =new ItemDto(supplierID,itemID,name,price,category,date,description,qty);
         try {
             boolean isSaved=itemmodel.SaveItems(itemDto);
             if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Item is Saved").show();
+                new Alert(Alert.AlertType.INFORMATION,"Item is Saved !").show();
                 ClearField();
                 loadAllItem();
             }
         } catch (SQLException e) {
-            //throw new RuntimeException(e);
-            new Alert(Alert.AlertType.INFORMATION,e.getMessage()).show();
-        }
-    }
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
-        String code = txtID.getText();
-
-        try {
-            ItemDto dto = itemmodel.searchItem(code);
-            if (dto != null) {
-                setFields(dto);
-            } else {
-                new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+            System.out.println(e);
         }
 
     }
-
 
     private void loadAllItem() {
         var model = new Itemmodel();
@@ -148,12 +145,14 @@ public class ItemformController {
             for (ItemDto dto : dtoList) {
                 obList.add(
                         new ItemTable(
-                                dto.getId(),
+                                dto.getSupplierID(),
+                                dto.getItemID(),
                                 dto.getName(),
                                 dto.getPrice(),
                                 dto.getCategory(),
                                 dto.getDate(),
-                                dto.getDescription()
+                                dto.getDescription(),
+                                dto.getQty()
                         )
                 );
             }
@@ -163,18 +162,58 @@ public class ItemformController {
             throw new RuntimeException(e);
         }
     }
+    private void setCellValueFactory() {
+        clmnID.setCellValueFactory(new PropertyValueFactory<>("itemID"));
+        clmnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clmnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        clmnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        clmnExpiryDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        clmnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        clmnQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+
+    }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
 
     }
+    @FXML
+    void btnSearchOnAction(ActionEvent event) {
+        SearchItem();
+    }
+    @FXML
+    void txtSearchOnAction(ActionEvent event) {
+        SearchItem();
+    }
+    private void setFields(ItemDto dto) {
+        txtSupplierID.setText(dto.getSupplierID());
+        txtID.setText(dto.getItemID());
+        txtName.setText(dto.getName());
+        txtPrice.setText(String.valueOf(dto.getPrice()));
+        txtCategory.setText(dto.getCategory());
+        txtDescription.setText(dto.getDescription());
+        txtQty.setText(String.valueOf(dto.getQty()));
+    }
 
+    private void SearchItem(){
+        String code = txtSearch.getText();
+
+        try {
+            ItemDto dto = itemmodel.searchItem(code);
+            if (dto != null) {
+                setFields(dto);
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "item not found!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
     public void ClearField(){
         txtID.setText("");
         txtName.setText("");
         txtPrice.setText("");
         txtCategory.setText("");
-        txtDate.setText("");
         txtDescription.setText("");
     }
     private void tableListener() {
@@ -184,50 +223,44 @@ public class ItemformController {
         });
     }
     private void setData(ItemTable row) {
-        txtID.setText(row.getId());
+        txtSupplierID.setText(row.getSupplierID());
+        txtID.setText(row.getItemID());
         txtName.setText(row.getName());
         txtPrice.setText(String.valueOf(row.getPrice()));
         txtCategory.setText(row.getCategory());
-        txtDate.setText(String.valueOf(row.getDate()));
         txtDescription.setText(row.getDescription());
-    }
-    private void setFields(ItemDto dto) {
-        txtID.setText(dto.getId());
-        txtName.setText(dto.getName());
-        txtPrice.setText(String.valueOf(dto.getPrice()));
-        txtCategory.setText(dto.getCategory());
-        txtDate.setText(String.valueOf(dto.getDate()));
-        txtDescription.setText(dto.getDescription());
+        txtQty.setText(String.valueOf(row.getQty()));
     }
 
-    public void txtIdOnKeyReleased(KeyEvent keyEvent) {
-        Regex.setTextColor(TextFields.ID,txtID);
-    }
-
-    public void txtNameOnKeyReleased(KeyEvent keyEvent) {
-        Regex.setTextColor(TextFields.NAME,txtName);
-    }
-
-    public void txtPriceOnKeyRelesed(KeyEvent keyEvent) {
-        Regex.setTextColor(TextFields.DOUBLE,txtPrice);
-    }
-
-    public void txtCategoryOnKeyReleased(KeyEvent keyEvent) {
-    }
-
-    public void txtDescriptionOnKeyReleased(KeyEvent keyEvent) {
-    }
-
-    public void txtDateOnKeyReleased(KeyEvent keyEvent) {
+    @FXML
+    void checkbxOnAction(ActionEvent event) {
 
     }
 
-
-    public boolean validate(){
-        return Regex.setTextColor(TextFields.ID,txtID) &&
-                Regex.setTextColor(TextFields.NAME,txtName)&&
-                Regex.setTextColor(TextFields.DOUBLE,txtPrice);
+    @FXML
+    void txtCategoryOnKeyReleased(KeyEvent event) {
 
     }
+
+    @FXML
+    void txtDescriptionOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtIdOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtNameOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtPriceOnKeyRelesed(KeyEvent event) {
+
+    }
+
 
 }

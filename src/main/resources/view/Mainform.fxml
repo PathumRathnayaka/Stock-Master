@@ -37,7 +37,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnOrders" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnOrderOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Orders" textFill="WHITE">
+            <Button fx:id="btnOrders" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnOrderOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Market Place" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>

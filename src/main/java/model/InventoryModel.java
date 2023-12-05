@@ -13,13 +13,15 @@ import java.util.List;
 public class InventoryModel {
     public boolean saveInventory(InventoryDto inventoryDto) throws SQLException {
         Connection connection= DbConnection.getInstance().getConnection();
-        String sql = "INSERT INTO inventory VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO inventory VALUES(?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,inventoryDto.getGodownID());
+        preparedStatement.setString(1,inventoryDto.getInventoryId());
         preparedStatement.setString(2,inventoryDto.getItemID());
-        preparedStatement.setString(3,inventoryDto.getTrackID());
-        preparedStatement.setString(4,inventoryDto.getInvoiceNum());
-        preparedStatement.setString(5, String.valueOf(inventoryDto.getQuantity()));
+        preparedStatement.setString(3,inventoryDto.getGodownID());
+        preparedStatement.setString(4,inventoryDto.getTrackID());
+        preparedStatement.setString(5,inventoryDto.getInvoiceNumber());
+        preparedStatement.setString(6, String.valueOf(inventoryDto.getQuantity()));
+        preparedStatement.setString(7, String.valueOf(inventoryDto.getDate()));
 
         boolean isSaved = preparedStatement.executeUpdate() > 0;
         return isSaved;
@@ -41,7 +43,9 @@ public class InventoryModel {
                             resultSet.getString(2),
                             resultSet.getString(3),
                             resultSet.getString(4),
-                            resultSet.getInt(5)
+                            resultSet.getString(5),
+                            resultSet.getInt(6),
+                            resultSet.getDate(7).toLocalDate()
                     )
             );
         }

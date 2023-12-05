@@ -1,9 +1,8 @@
 package model;
 
 import db.DbConnection;
-
-
 import dto.SupplierDto;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,14 +14,13 @@ import java.util.List;
 public class SupplierModel {
     public boolean SaveSupplier(SupplierDto supplierDto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql="INSERT INTO supplier VALUES(?,?,?,?,?,?)";
+        String sql="INSERT INTO supplier VALUES(?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,supplierDto.getSupplierID());
         preparedStatement.setString(2,supplierDto.getSupplierName());
-        preparedStatement.setString(3,supplierDto.getInvoiceNum());
-        preparedStatement.setString(4,supplierDto.getItemName());
-        preparedStatement.setString(5, String.valueOf(supplierDto.getDate()));
-        preparedStatement.setString(6, String.valueOf(supplierDto.getSupplierContact()));
+        preparedStatement.setString(3,supplierDto.getInvoiceName());
+        preparedStatement.setString(4, String.valueOf(supplierDto.getDate()));
+        preparedStatement.setString(5, String.valueOf(supplierDto.getSupplierContact()));
 
         boolean isSaved=preparedStatement.executeUpdate()>0;
         return isSaved;
@@ -43,9 +41,8 @@ public class SupplierModel {
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getDate(5).toLocalDate(),
-                            resultSet.getInt(6)
+                            resultSet.getDate(4).toLocalDate(),
+                            resultSet.getInt(5)
                     )
             );
         }
@@ -68,12 +65,12 @@ public class SupplierModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
-                    resultSet.getString(4),
                     resultSet.getDate(5).toLocalDate(),
                     resultSet.getInt(6)
             );
         }
         return dto;
     }
+
 
 }

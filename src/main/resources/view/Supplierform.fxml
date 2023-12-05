@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -17,58 +20,55 @@
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierID" layoutX="34.0" layoutY="123.0" promptText="S001" />
-      <TextField fx:id="txtSupplierName" layoutX="198.0" layoutY="123.0" promptText="Thomas Harry" />
-      <TextField fx:id="txtInvoiceName" layoutX="404.0" layoutY="123.0" promptText="193567" />
-      <TextField fx:id="txtItemName" layoutX="34.0" layoutY="182.0" promptText="Noodles" />
-      <Label layoutX="34.0" layoutY="101.0" text="Supplier ID" />
-      <Label layoutX="200.0" layoutY="101.0" text="Supplier Name" />
-      <Label layoutX="404.0" layoutY="99.0" text="Invoice Name" />
-      <DatePicker fx:id="txtDate" layoutX="198.0" layoutY="182.0" promptText="05-06-2023" />
-      <Label layoutX="35.0" layoutY="158.0" text="Item Name" />
-      <Label layoutX="204.0" layoutY="158.0" text="Date Of Supply" />
-      <TableView fx:id="tblSupplier" layoutX="34.0" layoutY="288.0" prefHeight="260.0" prefWidth="793.0">
+      <TextField fx:id="txtSupplierID" layoutX="34.0" layoutY="178.0" onKeyReleased="#txtSupplierIdOnKeyReleased" prefHeight="25.0" prefWidth="174.0" promptText="S001" />
+      <TextField fx:id="txtSupplierName" layoutX="240.0" layoutY="178.0" onKeyReleased="#txtSupplierNameOnKeyReleased" prefHeight="25.0" prefWidth="174.0" promptText="Thomas Harry" />
+      <TextField fx:id="txtInvoiceName" layoutX="443.0" layoutY="178.0" onKeyReleased="#txtInvoiceNumberOnKeyReleased" prefHeight="25.0" prefWidth="174.0" promptText="193567" />
+      <Label layoutX="34.0" layoutY="156.0" text="Supplier ID" />
+      <Label layoutX="241.0" layoutY="154.0" text="Supplier Name" />
+      <Label layoutX="442.0" layoutY="154.0" text="Invoice Number" />
+      <DatePicker fx:id="txtDate" layoutX="34.0" layoutY="237.0" promptText="05-06-2023" />
+      <Label layoutX="34.0" layoutY="213.0" text="Date Of Supply" />
+      <TableView fx:id="tblSupplier" layoutX="34.0" layoutY="343.0" prefHeight="260.0" prefWidth="622.0">
         <columns>
           <TableColumn fx:id="clmnID" prefWidth="75.0" text="Supplier ID" />
           <TableColumn fx:id="clmnSupplierName" prefWidth="128.0" text="Supplier Name" />
-            <TableColumn fx:id="clmnInvoiceName" prefWidth="124.0" text="Invoice Name" />
-            <TableColumn fx:id="clmnItemName" prefWidth="171.0" text="Item Name" />
+            <TableColumn fx:id="clmnInvoiceNumber" prefWidth="124.0" text="Invoice Number" />
             <TableColumn fx:id="clmnDate" prefWidth="147.0" text="Date Of Supply" />
             <TableColumn fx:id="clmnSupplierContact" prefWidth="147.0" text="Supplier Contact" />
         </columns>
       </TableView>
-      <Button fx:id="btnSave" layoutX="34.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #1ba722;" text="Save" textFill="WHITE">
+      <TextField fx:id="txtSupplierContact" layoutX="240.0" layoutY="237.0" onKeyReleased="#txtSupplierContactOnKeyReleased" prefHeight="25.0" prefWidth="174.0" promptText="076800800" />
+      <Label layoutX="240.0" layoutY="213.0" text="Supplier Contact" />
+      <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="40.0" layoutY="278.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #1ba722;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnUpdate" buttonType="RAISED" layoutX="132.0" layoutY="278.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Update" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnUpdate" layoutX="130.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefWidth="70.0" style="-fx-background-color: #182939;" text="Update" textFill="WHITE">
+      </JFXButton>
+      <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="230.0" layoutY="278.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Clear" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <TextField fx:id="txtSupplierContact" layoutX="404.0" layoutY="182.0" promptText="076800800" />
-      <Label layoutX="404.0" layoutY="158.0" text="Supplier Contact" />
-      <Button fx:id="btnSearch" layoutX="225.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnSearchOnAction" prefWidth="70.0" style="-fx-background-color: #182939;" text="Search" textFill="WHITE">
+      </JFXButton>
+      <JFXTextField layoutX="716.0" layoutY="47.0" prefHeight="25.0" prefWidth="183.0" />
+      <ButtonBar layoutX="728.0" layoutY="104.0" />
+      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="895.0" layoutY="44.0" opacity="0.83">
+         <image>
+            <Image url="@../img/search.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="897.0" layoutY="581.0">
+         <image>
+            <Image url="@../img/support.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnReport" buttonType="RAISED" layoutX="356.0" layoutY="278.0" onAction="#btnReportOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #182939;" text="Report" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnClear" layoutX="326.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefWidth="70.0" style="-fx-background-color: #182939;" text="Clear" textFill="WHITE">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      </JFXButton>
    </children>
 </AnchorPane>
