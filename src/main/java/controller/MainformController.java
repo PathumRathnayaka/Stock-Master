@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ public class MainformController {
     public void initialize() throws IOException {
         InitializeDashBoard();
         showDate();
+        updateTime();
     }
 
     public void InitializeDashBoard() throws IOException {
@@ -80,6 +82,29 @@ public class MainformController {
         SimpleDateFormat s =new SimpleDateFormat("dd-MM-yyyy");
         String dat= s.format(d);
         lblDate.setText(dat);
+    }
+
+    private void updateTime() {
+        Thread clockThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+
+
+                    Date now = new Date();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    String formattedTime = dateFormat.format(now);
+
+
+                    Platform.runLater(() -> lblTime.setText(" " + formattedTime));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        clockThread.setDaemon(true);
+        clockThread.start();
     }
     
 

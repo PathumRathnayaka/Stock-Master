@@ -22,7 +22,7 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Label>
-      <TableView fx:id="tblOrders" layoutX="34.0" layoutY="331.0" prefHeight="282.0" prefWidth="863.0">
+      <TableView fx:id="tblMarketPlace" layoutX="34.0" layoutY="331.0" prefHeight="282.0" prefWidth="863.0">
         <columns>
           <TableColumn fx:id="clmnMarketID" prefWidth="75.0" text="Market ID" />
           <TableColumn fx:id="clmnMarketName" prefWidth="178.0" text="Market Name" />

@@ -16,7 +16,7 @@ public class Launcher extends Application {
         Parent parent= FXMLLoader.load(this.getClass().getResource("/view/Loginform.fxml"));
         Scene scene=new Scene(parent);
         stage.setScene(scene);
-        stage.setTitle("Login");
+        stage.setTitle(" ");
         stage.centerOnScreen();
         stage.show();
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShelfLifeCalculatorformContoller">
+   <children>
+      <DatePicker fx:id="datePickerStartdate" layoutX="64.0" layoutY="112.0" />
+      <DatePicker fx:id="datePickerTodaydate" layoutX="64.0" layoutY="169.0" />
+      <DatePicker fx:id="datePickerExpirationdate" layoutX="64.0" layoutY="221.0" />
+      <Label layoutX="64.0" layoutY="81.0" text="shelf life start date" />
+      <Label layoutX="64.0" layoutY="152.0" text="today date " />
+      <Label layoutX="64.0" layoutY="200.0" text="expiration date" />
+      <Label layoutX="299.0" layoutY="99.0" prefHeight="25.0" prefWidth="91.0" text=" Percent Left:" />
+      <Label layoutX="300.0" layoutY="140.0" prefHeight="25.0" prefWidth="91.0" text=" Days Left:" />
+      <Label layoutX="300.0" layoutY="188.0" prefHeight="25.0" prefWidth="91.0" text="Date at 75%: " />
+      <Label fx:id="lblPercentLeft" layoutX="423.0" layoutY="103.0" />
+      <Label fx:id="lblDaysLeft" layoutX="423.0" layoutY="144.0" />
+      <Label fx:id="lblDateAt75" layoutX="423.0" layoutY="192.0" />
+      <JFXButton layoutX="274.0" layoutY="274.0" onAction="#btnCalculateOnAction" text="Calculate " />
+   </children>
+</AnchorPane>

@@ -2,9 +2,13 @@ package controller;
 
 import db.DbConnection;
 import dto.MarketPlaceDto;
+import dto.tm.MarketPlaceTable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.MarketPlacemodel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -13,6 +17,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MarketPlaceformController {
 
@@ -42,9 +47,8 @@ public class MarketPlaceformController {
 
     @FXML
     private TableColumn<?, ?> clmnMarketName;
-
     @FXML
-    private TableView<?> tblOrders;
+    private TableView<MarketPlaceTable> tblMarketPlace;
 
     @FXML
     private TextField txtAddress;
@@ -63,6 +67,11 @@ public class MarketPlaceformController {
 
     private static MarketPlaceDto marketPlaceDto=new MarketPlaceDto();
     private static MarketPlacemodel marketPlacemodel=new MarketPlacemodel();
+
+    public void initialize(){
+        loadAllmarketPlace();
+        setCellValueFactory();
+    }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -87,6 +96,38 @@ public class MarketPlaceformController {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
 
+    }
+    private void loadAllmarketPlace() {
+        var model = new MarketPlacemodel();
+
+        ObservableList<MarketPlaceTable> obList = FXCollections.observableArrayList();
+
+        try {
+            List<MarketPlaceDto> dtoList = model.getAllMarket();
+
+            for (MarketPlaceDto dto : dtoList) {
+                obList.add(
+                        new MarketPlaceTable(
+                                dto.getMarketPlaceId(),
+                                dto.getMarketName(),
+                                dto.getAddress(),
+                                dto.getHotline(),
+                                dto.getEmai()
+                        )
+                );
+            }
+
+            tblMarketPlace.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void setCellValueFactory() {
+        clmnMarketID.setCellValueFactory(new PropertyValueFactory<>("marketPlaceId"));
+        clmnMarketName.setCellValueFactory(new PropertyValueFactory<>("marketName"));
+        clmnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        clmnHotline.setCellValueFactory(new PropertyValueFactory<>("hotline"));
+        clmnEmail.setCellValueFactory(new PropertyValueFactory<>("emai"));
     }
 
     @FXML

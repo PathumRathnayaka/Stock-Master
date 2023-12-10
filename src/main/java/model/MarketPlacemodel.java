@@ -30,51 +30,7 @@ public class MarketPlacemodel {
         return isSaved;
     }
 
-//    public MarketPlaceDto searchMarket(String id) throws SQLException {
-//        Connection connection = DbConnection.getInstance().getConnection ();
-//
-//        String sql = "SELECT * FROM marketplace WHERE id = ?";
-//        PreparedStatement pstm = connection.prepareStatement(sql);
-//        pstm.setString(1, id);
-//
-//        ResultSet resultSet = pstm.executeQuery();
-//
-//        MarketPlaceDto dto = null;
-//
-//        if(resultSet.next()) {
-//            String marketplaceId = resultSet.getString(1);
-//            String marketName = resultSet.getString(2);
-//            String address = resultSet.getString(3);
-//            int hotline = resultSet.getInt(4);
-//            String email = resultSet.getString(5);
-//
-//            dto = new MarketPlaceDto(marketplaceId,marketName,address,hotline,email);
-//        }
-//        return dto;
-//    }
-//    public MarketPlaceDto searchMarket(String id) throws SQLException {
-//        Connection connection = DbConnection.getInstance().getConnection();
-//        String sql = "SELECT * FROM marketplace WHERE id = ?";
-//
-//        PreparedStatement pstm = connection.prepareStatement(sql);
-//        pstm.setString(1, id);
-//
-//        ResultSet resultSet = pstm.executeQuery();
-//
-//        MarketPlaceDto dto = null;
-//
-//        if (resultSet.next()) {
-//            dto = new MarketPlaceDto(
-//                    resultSet.getString(1),
-//                    resultSet.getString(2),
-//                    resultSet.getString(3),
-//                    resultSet.getInt(4),
-//                    resultSet.getString(5)
-//            );
-//        }
-//        return dto;
-//
-//    }
+
 public MarketPlaceDto searchMarket(String id) throws SQLException {
     Connection connection = DbConnection.getInstance().getConnection();
     String sql = "SELECT * FROM marketplace WHERE marketplaceId = ?";
