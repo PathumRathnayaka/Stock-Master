@@ -45,9 +45,9 @@ public class ShelfLifeCalculatorformContoller {
             LocalDate dateAt75Percent = startDate.plusDays(daysAt75Percent);
 
             // Update labels
-            lblPercentLeft.setText("Percent Left: " + String.format("%.2f", percentLeft) + "%");
-            lblDaysLeft.setText("Days Left: " + (totalDays - daysPassed));
-            lblDateAt75.setText("Date at 75%: " + dateAt75Percent.toString());
+            lblPercentLeft.setText(" " + String.format("%.2f", percentLeft) + "%");
+            lblDaysLeft.setText(" " + (totalDays - daysPassed));
+            lblDateAt75.setText(" " + dateAt75Percent.toString());
         } else {
             // Handle case where not all dates are selected
             lblPercentLeft.setText("Please select all dates");
@@ -55,5 +55,14 @@ public class ShelfLifeCalculatorformContoller {
             lblDateAt75.setText("");
         }
 
+    }
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+        ClearField();
+    }
+    private void ClearField(){
+        lblPercentLeft.setText("");
+        lblDaysLeft.setText("");
+        lblDateAt75.setText("");
     }
 }
