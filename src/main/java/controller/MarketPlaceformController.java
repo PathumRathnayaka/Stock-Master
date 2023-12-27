@@ -28,9 +28,6 @@ public class MarketPlaceformController {
     private Button btnSave;
 
     @FXML
-    private Button btnSearch;
-
-    @FXML
     private Button btnUpdate;
 
     @FXML
@@ -130,10 +127,7 @@ public class MarketPlaceformController {
         clmnEmail.setCellValueFactory(new PropertyValueFactory<>("emai"));
     }
 
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
 
-    }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
@@ -149,5 +143,11 @@ public class MarketPlaceformController {
                 DbConnection.getInstance().getConnection()
         );
         JasperViewer.viewReport(jasprePrint,false);
+    }
+
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnSearchOnAction(ActionEvent actionEvent) {
     }
 }

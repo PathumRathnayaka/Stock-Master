@@ -138,4 +138,10 @@ public class InventoryformController {
     void btnUpdateOnAction(ActionEvent event) {
 
     }
+
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnSearchOnAction(ActionEvent actionEvent) {
+    }
 }

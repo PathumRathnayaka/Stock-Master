@@ -200,4 +200,10 @@ public class SupplierformController {
     void txtSupplierNameOnKeyReleased(KeyEvent event) {
         Regex.setTextColor(TextFields.NAME,txtSupplierName);
     }
+
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnSearchOnAction(ActionEvent actionEvent) {
+    }
 }

@@ -21,6 +21,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="btnSupplier" layoutX="10.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnSupplierOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Supplier" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             <Button fx:id="btnItem" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnItemOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Item" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
@@ -45,14 +53,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnSupplier" layoutX="10.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnSupplierOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Supplier" textFill="WHITE">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
             <Button fx:id="btnShipment" layoutX="10.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnShipmentOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Shipment" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
@@ -61,7 +61,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnExpired" layoutX="10.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnExpiredOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Expired Items" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" onAction="#btnPurchesedOrderOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Purchers Orders" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
@@ -69,7 +69,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" onAction="#btnPurchesedOrderOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Purchers Orders" textFill="WHITE">
+            <Button fx:id="btnExpired" layoutX="10.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnExpiredOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Expired Items" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>

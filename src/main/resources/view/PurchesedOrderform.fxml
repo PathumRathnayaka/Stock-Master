@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="633.0" prefWidth="956.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PurchesedOrderformController">
    <children>
-      <Label layoutX="70.0" layoutY="63.0" prefHeight="52.0" prefWidth="185.0" text="Purchesed Orders" textFill="#182939">
+      <Label layoutX="70.0" layoutY="63.0" prefHeight="74.0" prefWidth="277.0" text="Purchesed Orders" textFill="#182939">
          <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
+            <Font name="Arial Rounded MT Bold" size="26.0" />
          </font>
       </Label>
       <TableView layoutX="70.0" layoutY="197.0" prefHeight="305.0" prefWidth="556.0">
