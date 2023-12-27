@@ -2,6 +2,7 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -70,6 +71,12 @@ public class MainformController {
 
     public void btnExpiredOnAction(ActionEvent actionEvent) throws IOException {
         Parent node = FXMLLoader.load(this.getClass().getResource("/view/ExpiredItemform.fxml"));
+        this.SubAnchorPane.getChildren().clear();
+        this.SubAnchorPane.getChildren().add(node);
+    }
+    @FXML
+    void btnReportOnAction(ActionEvent event) throws IOException {
+        Parent node = FXMLLoader.load(this.getClass().getResource("/view/Reportform.fxml"));
         this.SubAnchorPane.getChildren().clear();
         this.SubAnchorPane.getChildren().add(node);
     }
