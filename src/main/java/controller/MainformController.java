@@ -80,6 +80,18 @@ public class MainformController {
         this.SubAnchorPane.getChildren().clear();
         this.SubAnchorPane.getChildren().add(node);
     }
+    @FXML
+    void btnPurchesedOrderOnAction(ActionEvent event) throws IOException {
+        Parent node = FXMLLoader.load(this.getClass().getResource("/view/PurchesedOrderform.fxml"));
+        this.SubAnchorPane.getChildren().clear();
+        this.SubAnchorPane.getChildren().add(node);
+    }
+    @FXML
+    void btnSettingOnAction(ActionEvent event) throws IOException {
+        Parent node = FXMLLoader.load(this.getClass().getResource("/view/Settingform.fxml"));
+        this.SubAnchorPane.getChildren().clear();
+        this.SubAnchorPane.getChildren().add(node);
+    }
 
     public void btnDashBoardOnAction(ActionEvent actionEvent) throws IOException {
         InitializeDashBoard();

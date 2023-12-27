@@ -69,7 +69,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Purchers Orders" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" onAction="#btnPurchesedOrderOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Purchers Orders" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>
@@ -85,7 +85,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="10.0" layoutY="402.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Setting" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnSettingOnAction" prefHeight="49.0" prefWidth="218.0" style="-fx-background-color: 182939;" text="Setting" textFill="WHITE">
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font>

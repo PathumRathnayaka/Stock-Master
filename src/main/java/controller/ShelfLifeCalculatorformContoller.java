@@ -61,8 +61,8 @@ public class ShelfLifeCalculatorformContoller {
         ClearField();
     }
     private void ClearField(){
-        lblPercentLeft.setText("");
-        lblDaysLeft.setText("");
+        lblPercentLeft.setText("00%");
+        lblDaysLeft.setText("00");
         lblDateAt75.setText("");
     }
 }
